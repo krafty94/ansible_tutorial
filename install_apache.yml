@@ -7,17 +7,23 @@
   - name: update repository index
     yum:
       update_cache: yes
-    when: ansible_distribution in ["Debian", "Ubuntu"]
+    when: ansible_distribution == "CentOS"
 
 
-  - name: install sl
-    yum:
-      name: sl
+  - name: install chromium on Mint
+    apt:
+      name: chromium
       state: latest 
-    when: ansible_distribution in ["Debian", "Ubuntu"]
+    when: ansible_distribution == "Linux Mint"
 
-  - name: install cowsay
+  - name: install cowsay on Mint 
+    apt:
+      name: cowsay
+      state: latest
+    when: ansible_distribution == "Linux Mint"
+
+  - name: install cowsay on CentOS
     yum:
       name: cowsay
       state: latest
-    when: ansible_distribution == "Ubuntu"
+    when: ansible_distribution == "CentOS" and ansible_distribution_version == "7.6"
