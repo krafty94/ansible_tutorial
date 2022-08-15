@@ -7,13 +7,17 @@
   - name: update repository index
     yum:
       update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
 
   - name: install sl
     yum:
       name: sl
       state: latest 
+    when: ansible_distribution in ["Debian", "Ubuntu"]
 
   - name: install cowsay
     yum:
       name: cowsay
       state: latest
+    when: ansible_distribution == "Ubuntu"
