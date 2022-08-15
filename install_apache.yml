@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    yum:
+      update_cache: yes
+
+  - name: install sl
+    yum:
+      name: sl
+      state: latest 
+
+  - name: install cowsay
+    yum:
+      name: cowsay
+      state: latest

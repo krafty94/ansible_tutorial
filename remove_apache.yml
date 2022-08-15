@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository index
+    yum:
+      update_cache: yes
+
+  - name: remove sl
+    yum:
+      name: sl
+      state: absent
+
+  - name: remove cowsay
+    yum:
+      name: cowsay
+      state: absent
