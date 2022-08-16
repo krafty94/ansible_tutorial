@@ -4,26 +4,55 @@
   become: true
   tasks:
 
-  - name: update repository index
+  - name: install updates (CentOS)
     yum:
+      update_only: yes
       update_cache: yes
     when: ansible_distribution == "CentOS"
 
-
-  - name: install chromium on Mint
+  - name: install updates (Mint)
     apt:
-      name: chromium
-      state: latest 
+      upgrade: dist
+      update_cache: yes
     when: ansible_distribution == "Linux Mint"
 
-  - name: install cowsay on Mint 
-    apt:
+  - name: install cowsay on Mint and CentOS
+    package:
       name: cowsay
       state: latest
-    when: ansible_distribution == "Linux Mint"
+    tags: cowsay
+    when: ansible_distribution in  ["CentOS", "Linux Mint"]
 
-  - name: install cowsay on CentOS
+- hosts: [apache]
+  become: true
+  tasks:
+
+  - name: install apache on CentOS
     yum:
-      name: cowsay
+      name: httpd
       state: latest
-    when: ansible_distribution == "CentOS" and ansible_distribution_version == "7.6"
+    tags: apache
+
+  - name: copy default html file for site
+    copy:
+      src: default_site.html
+      dest: /var/www/html/index.html
+      owner: root
+      group: root
+      mode: 0644 
+    tags: copy 
+
+- hosts: [database]
+  become: true
+  tasks:
+
+  - name: install mariaDB on Mint
+    apt:
+      name: mariadb-server
+      state: latest
+    tags: database
+
+
+
+
+
