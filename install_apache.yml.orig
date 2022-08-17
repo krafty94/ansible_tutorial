@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: install chromium and cowsay on Mint and CentOS
+    apt:
+      name:
+        - chromium
+        - cowsay
+      state: latest 
+      update_cache: yes
+    when: ansible_distribution == "Linux Mint"
+
+  - name: install chromium and cowsay on CentOS
+    yum:
+      name:
+        - chromium
+        - cowsay
+      state: latest
+      update_cache: yes
+    when: ansible_distribution == "CentOS" and ansible_distribution_version == "7.6"

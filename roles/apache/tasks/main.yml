@@ -1,0 +1,14 @@
+- name: Instalace Apache (role) na CentOS.
+  yum:
+    name: httpd
+    state: latest
+  when: ansible_distribution == "CentOS"
+  tags: apache 
+
+- name: Spousteni Apache na CentOS.
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+  when: ansible_distribution == "CentOS"
+  tags: apache

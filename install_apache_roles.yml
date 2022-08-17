@@ -110,7 +110,6 @@
     apt:
       name: mariadb-server
       state: latest
-    when: ansible_distribution == "Linux Mint"
     tags: database
 
 
